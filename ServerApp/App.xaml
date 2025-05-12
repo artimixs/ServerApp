@@ -1,0 +1,140 @@
+﻿<Application x:Class="ServerWindow.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ServerWindow"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Кисти -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#343746" />
+        <SolidColorBrush x:Key="SecondaryBrush" Color="#21222C" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#1E1F22" />
+        <!-- фон -->
+        <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="#282A36" />
+        <SolidColorBrush x:Key="LightBackgroundBrush" Color="#44475A" />
+        <SolidColorBrush x:Key="MainBackgroundBrush" Color="#333646" />
+        <!-- текс -->
+        <SolidColorBrush x:Key="MainTextBrush" Color="#BABABF" />
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#EDEDEF" />
+
+        <!-- Стиль для верхней границы окна (WindowChrome) -->
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CaptionHeight="30" CornerRadius="0" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}" />
+        </Style>
+
+        <!-- Стиль для Grid -->
+        <Style TargetType="Grid">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        </Style>
+
+        <!-- Стиль для Canvas -->
+        <Style TargetType="Canvas">
+            <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+        </Style>
+
+        <!-- Стиль для Menu -->
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}" />
+        </Style>
+
+        <!-- Стиль для MenuItem -->
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="Padding" Value="10,5" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для ComboBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+
+        <!-- Стиль для ComboBoxItem -->
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="Padding" Value="5,2" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LightBackgroundBrush}" />
+        </Style>
+
+        <Style TargetType="Thumb" x:Key="CustomThumbStyle">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <!-- Цвет ползунка -->
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <!-- Стиль для ScrollBar (прокрутки) -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <!-- Добавление фона через Rectangle -->
+                            <Rectangle Fill="{DynamicResource LightBackgroundBrush}" />
+                            <Track Name="PART_Track">
+                                <Track.Thumb>
+                                    <Thumb Style="{DynamicResource CustomThumbStyle}" />
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!-- Стиль для Border -->
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+
+        <!-- Стиль для TextBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{DynamicResource LightBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+
+        <!-- Стиль для Label -->
+        <Style TargetType="Label">
+            <Setter Property="Background" Value="{DynamicResource LightBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+
+        <!-- Стиль для Thumb -->
+        <Style TargetType="Thumb">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Application.Resources>
+</Application>
