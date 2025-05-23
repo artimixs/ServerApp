@@ -4,60 +4,69 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using ServerWindow.DataHandler;
-using SuperSocket.SocketBase;
-using SuperSocket.SocketEngine.Configuration;
 using MongoDB.Driver;
 using System.Net;
 using System.Net.NetworkInformation;
 using MongoDB.Bson;
 using ServerWindow.NetCode;
+using System.Threading.Tasks;
 
 namespace ServerWindow
 {
     public partial class MainWindow : Window
     {
-        private ServerHandler _serverHandler;
+        //private ServerHandler _serverHandler;
+        TcpServer _tcpServer;
         private Thread _serverThread;
         internal DataBaseHandler dataHandler;
 
         public MainWindow()
         {
             InitializeComponent();
-            // Запуск сервера в отдельном потоке
-            _serverThread = new Thread(StartServer);
-            _serverThread.IsBackground = true; // Поток завершится, когда закрывается приложение
-            _serverThread.Start();
 
             var mongoConnection = new MongoDBConnection();
-
-            // Получите базу данных
             var database = mongoConnection.GetDatabase();
 
             dataHandler = new DataBaseHandler(database, this);
+
+            StartServer(); // только после dataHandler!
         }
 
         private void StartServer()
         {
-            _serverHandler = new ServerHandler(this);
-
-            Dispatcher.Invoke(() =>
+            Task.Run(async () =>
             {
-                ConsoleOfSystem.Text += "Запуск сервера...\n";
-            });
+                try
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ConsoleOfSystem.Text += "Запуск TCP JSON-сервера...\n";
+                    });
 
-            _serverHandler.SetupAndStartServer();
+                    _tcpServer = new TcpServer(8080, this);
+                    await _tcpServer.StartAsync();
+                }
+                catch (Exception e)
+                {
+                    LogMessage(e.Message.ToString(), "ConsoleOfSystem");
+                }
+            });
         }
+
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            // Остановка сервера при закрытии окна
-            if (_serverHandler != null)
+
+            // Остановка TCP JSON-сервера при закрытии окна
+            if (_tcpServer != null)
             {
-                _serverHandler.StopServer();
-                _serverThread.Join(); // Дожидаемся завершения потока
+                _tcpServer.Stop();
             }
+
+            _serverThread?.Join(); // Дожидаемся завершения фонового потока
         }
+
 
         public void LogMessage(string message, string consoleName)
         {

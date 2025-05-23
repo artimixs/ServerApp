@@ -10,7 +10,7 @@ namespace ServerWindow
         {
             // Установите соединение с локальной MongoDB
             var client = new MongoClient("mongodb://localhost:27017");
-            database = client.GetDatabase("gameBD"); // Название базы данных
+            database = client.GetDatabase("TestBD"); // Название базы данных
         }
 
         public IMongoDatabase GetDatabase()

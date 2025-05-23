@@ -30,7 +30,7 @@ public static class AssemblyLoader
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine($"[Ошибка загрузки сборки] {reference.FullName}: {ex.Message}");
+                        Console.WriteLine($"[Ошибка загрузки сборки] {reference.FullName}: {ex.Message}");
                     }
                 }
             }

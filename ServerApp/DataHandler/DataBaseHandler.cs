@@ -219,10 +219,10 @@ namespace ServerWindow.DataHandler
             try
             {
                 // Проверяем и создаем базы данных, если их нет
-                CheckAndCreateDatabases("gameBD");
+                CheckAndCreateDatabases("TestBD");
 
                 var client = new MongoClient(Database.Client.Settings);
-                var db = client.GetDatabase("gameBD");
+                var db = client.GetDatabase("TestBD");
 
                 var comparer = new MongoStructureComparer(db, ConfigFilePath);
 
@@ -323,25 +323,39 @@ namespace ServerWindow.DataHandler
         public BsonDocument GetElementByName(string collectionName, string elementName)
         {
             var client = new MongoClient(Database.Client.Settings);
-            var db = client.GetDatabase("gameBD");
+            var db = client.GetDatabase("TestBD");
             var collection = db.GetCollection<BsonDocument>(collectionName);
 
-            var filter = Builders<BsonDocument>.Filter.Eq("name", elementName);
+            var filter = Builders<BsonDocument>.Filter.Eq("Name", elementName);
+
 
             var result = collection.Find(filter).FirstOrDefault();
 
             if (result != null)
             {
-                _mainWindow.LogMessage($"Элемент '{elementName}' найден в коллекции '{collectionName}' базы '{"gameBD"}'.\r\n", "ConsoleOfDatabaseRequest");
+                _mainWindow.LogMessage($"Элемент '{elementName}' найден в коллекции '{collectionName}' базы '{"TestBD"}'.\r\n", "ConsoleOfDatabaseRequest");
             }
             else
             {
-                _mainWindow.LogMessage($"Элемент '{elementName}' не найден в коллекции '{collectionName}' базы '{"gameBD"}'.\r\n", "ConsoleOfDatabaseRequest");
+                _mainWindow.LogMessage($"Элемент '{elementName}' не найден в коллекции '{collectionName}' базы '{"TestBD"}'.\r\n", "ConsoleOfDatabaseRequest");
             }
 
             return result;
         }
-        public List<string> GetAllElementNames(string collectionName)
+        public List<string> GetAllElementNames(string collection)
+        {
+            var result = new List<string>();
+            var documents = Database.GetCollection<BsonDocument>(collection).Find(FilterDefinition<BsonDocument>.Empty).ToList();
+
+            foreach (var doc in documents)
+            {
+                if (doc.Contains("Name") && doc["Name"].IsString)
+                    result.Add(doc["Name"].AsString);
+            }
+
+            return result;
+        }
+        /*public List<string> GetAllElementNames(string collectionName)
         {
             var client = new MongoClient(Database.Client.Settings);
             var db = client.GetDatabase("gameBD");
@@ -362,15 +376,15 @@ namespace ServerWindow.DataHandler
             _mainWindow.LogMessage($"Из коллекции '{collectionName}' получены имена элементов: {string.Join(", ", names)}\r\n", "ConsoleOfDatabaseRequest");
 
             return names;
-        }
+        }*/
         public List<string> GetAllCollections()
         {
             var client = new MongoClient(Database.Client.Settings);
-            var db = client.GetDatabase("gameBD");
+            var db = client.GetDatabase("TestBD");
 
             var collections = db.ListCollectionNames().ToList();
 
-            _mainWindow.LogMessage($"Найдены коллекции в базе данных '{"gameBD"}': {string.Join(", ", collections)}\r\n", "ConsoleOfDatabaseRequest");
+            _mainWindow.LogMessage($"Найдены коллекции в базе данных '{"TestBD"}': {string.Join(", ", collections)}\r\n", "ConsoleOfDatabaseRequest");
 
             return collections;
         }

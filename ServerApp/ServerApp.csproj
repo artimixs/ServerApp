@@ -12,12 +12,13 @@
     <PackageReference Include="MongoDB.Driver" Version="3.3.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.30.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="SuperSocket" Version="1.6.6.1" />
     <PackageReference Include="SuperSocket.ClientEngine.Core" Version="0.10.0" />
-    <PackageReference Include="SuperSocket.Engine" Version="1.6.6.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="CorporativsObjects">
+      <HintPath>..\..\CorporativsObjects\CorporativsObjects\bin\Debug\net8.0\CorporativsObjects.dll</HintPath>
+    </Reference>
     <Reference Include="UrukGameObjects">
       <HintPath>..\..\UrukGameObjects\UrukGameObjects\bin\Debug\net6.0\UrukGameObjects.dll</HintPath>
     </Reference>

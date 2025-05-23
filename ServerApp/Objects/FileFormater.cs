@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UrukGameObjects.Abilities;
 using UrukGameObjects.Characters;
 
-namespace ServerWindow.GameObjects
+namespace ServerWindow.Objects
 {
     public static class FileFormatter
     {

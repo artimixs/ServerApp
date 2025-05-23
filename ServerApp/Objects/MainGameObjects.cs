@@ -8,7 +8,7 @@ using UrukGameObjects.Abilities;
 using UrukGameObjects.Characters;
 using UrukGameObjects.Items;
 
-namespace ServerWindow.GameObjects
+namespace ServerWindow.Objects
 {
     internal abstract class MainGameObjects
     {
